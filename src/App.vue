@@ -1,9 +1,14 @@
 <template>
  <div id="app">
+   <v-app id="inspire">
     <div id="nav">
-      <router-link to="/"></router-link>
+       <v-btn
+        depressed
+        color="primary"
+      ><router-link to="/"></router-link>Home</v-btn>
     </div>
     <router-view/>
+   </v-app>
   </div>
 </template>
 

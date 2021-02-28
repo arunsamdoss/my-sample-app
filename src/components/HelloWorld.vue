@@ -7,9 +7,9 @@
       </v-col>
       <v-col cols="4" class="right">
         <h2>LOGIN</h2>
-          <v-form v-model="form" v-on:submit.prevent="submit">
+          <v-form v-on:submit.prevent="submit">
               <v-text-field
-                v-model="form.email"
+                v-model="email"
                label="Email"
                 required
                 outlined
@@ -18,7 +18,7 @@
                 dense
               ></v-text-field>
               <v-text-field
-                v-model="form.password"
+                v-model="password"
                 label="Password"
                 :append-icon="showPass ? 'mdi-eye' : 'mdi-eye-off'"
                 @click:append="showPass = !showPass"
@@ -44,14 +44,15 @@
 export default {
   name: 'HelloWord',
   data: () => ({
-form: [],
+    email: '',
+    password: '',
     showPass: false
   }),
   methods: {
     submit: function() {
     if(this.form.email != "" && this.form.password != "") {
 
-    this.$router.replace({ name: "Table" });
+    this.$router.replace({ name: "Edit" });
     }
     }
   }

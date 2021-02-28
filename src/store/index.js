@@ -15,21 +15,20 @@ export default new Vuex.Store({
   //     password: '123456'
   //   }
   // ],
-  todo: []
-  },
-  getters: {
-    allTodos: (state) => {
-      return state.todos
-    }
+  todos: []
   },
    actions: {
     async fetchTodos({ commit }) {
       const response = await axios.get('https://jsonplaceholder.typicode.com/todos')
   
       commit('setTodos', response.data);
+      console.log(response.data)
     }
   },
   mutations: {
-      setTodos: (state, todos) => (state.todos = todos)
+    setTodos: (state, todos) =>{
+       console.log(todos)
+       return state.todos = todos
   }
+}
 })
