@@ -1,10 +1,11 @@
 <template>
+<v-container>  
   <div class="todos">
     <h1 style="text-align: center;">Datatable</h1>
     <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="primary" dark v-bind="attrs" v-on="on">
-          ADD
+        <v-btn class="text-center" color="primary" dark v-bind="attrs" v-on="on">
+          ADD TITLE
         </v-btn>
       </template>
       <v-card>
@@ -31,13 +32,18 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+     <v-btn
+        depressed
+        color="primary"
+      ><router-link to="/"></router-link>Home</v-btn>
     <v-data-table :headers="headers" :items="allTodos" item-key="id">
     </v-data-table>
   </div>
+</v-container>
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState } from "vuex"
 
 export default {
   name: "Table",
@@ -49,7 +55,6 @@ export default {
   computed: {
     ...mapState({
       allTodos: (state) => {
-        console.log(state);
         return state.todos;
       },
     }),
@@ -68,11 +73,6 @@ export default {
           value: "title",
         }
       ];
-    },
-  },
-  watch: {
-    allTodos: function(data, olddata) {
-      console.log(data, olddata);
     },
   },
   created() {
