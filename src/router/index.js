@@ -3,9 +3,11 @@ import VueRouter from 'vue-router'
 
 import Home from '../views/Home.vue'
 import Edit from '../views/Edit.vue'
+
 Vue.use(VueRouter)
 
 const routes = [
+
   {
     path: '/',
     name: 'Home',
@@ -13,7 +15,7 @@ const routes = [
   },
   {
     path: '/edit',
-    name: 'Table',
+    name: 'Edit',
     component: Edit
   }
 ]

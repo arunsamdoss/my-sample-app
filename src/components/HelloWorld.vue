@@ -7,10 +7,11 @@
       </v-col>
       <v-col cols="4" class="right">
         <h2>LOGIN</h2>
-        <v-form @submit.prevent="submit(data)" >
+        <v-form ref="form" lazy-validation>
           <v-text-field
             v-model="form.name "
             label="User Name"
+            :rules="emailRules"
             outlined
             dark
             filled
@@ -19,6 +20,7 @@
           <v-text-field
             v-model="form.password"
             label="Password"
+            :rules="passwordRules"
             :append-icon="showPass ? 'mdi-eye' : 'mdi-eye-off'"
             @click:append="showPass = !showPass"
             outlined
@@ -27,11 +29,9 @@
             filled
             :type="showPass ? 'text' : 'password'"
           ></v-text-field>
-          <div class="text-center">
-            <v-btn  class="signin-btn" type="submit" rounded color="white">
+            <v-btn  class="signin-btn" rounded color="white" v-on:click.prevent="login(form)">
               Sign In
             </v-btn>
-          </div>
         </v-form>
       </v-col>
     </v-row>
@@ -45,25 +45,29 @@ export default {
   name: "HelloWord",
   data() {
     return {
-      props: ['authenticated'],
       form: {
       name: '',
       password: ''
       },
+    emailRules: [
+  v => !!v || 'E-mail is required',
+  v => /^(([^<>()[\]\\.,;:\s@']+(\.[^<>()\\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(v) || 'E-mail must be valid',
+ ],
+   passwordRules: [
+      v => !!v || 'Password is required',
+      v => /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(v) || 'Password must contain at least lowercase letter, one number, a special character and one uppercase letter',
+  ],
     showPass: false,
     }
   },
- created: function () {
-console.log(this.authenticated)
- },
   methods: {
-    submit(dst) {
-      console.log(dst)
+    login(dar) {
+      console.log(dar)
       if (this.form.name != "" && this.form.password != "") {
-        if(this.form.name == this.$parent.mockAccount.name && this.form.password == this.$parent.mockAccount.password) 
+      if(this.form.name == this.$parent.Account.name && this.form.password == this.$parent.Account.password) 
         {
+        this.$router.push({ name: "Edit" })
         this.$emit("authenticated", true)
-        this.$router.replace({ name: "Table" })
         } else {
             console.log("The username and / or password is incorrect")
         }
