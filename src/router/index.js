@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 
 import Home from '../views/Home.vue'
 import Edit from '../views/Edit.vue'
-
+import Root from '../views/root.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -17,6 +17,11 @@ const routes = [
     path: '/edit',
     name: 'Edit',
     component: Edit
+  },
+  {
+    path: '/root',
+    name: 'Root',
+    component: Root
   }
 ]
 

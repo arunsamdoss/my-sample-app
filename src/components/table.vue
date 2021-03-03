@@ -2,14 +2,13 @@
 <v-container>  
   <div class="todos">
     <h1 style="text-align: center;">Data Table</h1>
-    <v-btn
+    <!-- <v-btn
         color="primary"
-      ><router-link to="/"></router-link>logout</v-btn>
-      ||
+      ><router-link to="/"></router-link>logout</v-btn>|| -->
     <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn class="text-center" color="primary" dark v-bind="attrs" v-on="on">
-          ADD TITLE
+        <v-btn fab dark color="indigo" v-bind="attrs" v-on="on">
+         <v-icon dark>+</v-icon>
         </v-btn>
       </template>
       <v-card>
@@ -37,6 +36,23 @@
       </v-card>
     </v-dialog>
     <v-data-table :headers="headers" :items="allTodos" item-key="id">
+      <template v-slot:items="props">
+       <td class="justify-center layout px-0">
+            <v-icon
+              small
+              class="mr-2"
+              @click="editItem(props.item)"
+            >
+              edit
+            </v-icon>
+            <v-icon
+              small
+              @click="deleteItem(props.item)"
+            >
+              delete
+            </v-icon>
+          </td>
+      </template>    
     </v-data-table>
   </div>
 </v-container>
@@ -67,11 +83,14 @@ export default {
 
           value: "id",
         },
-          {
+        {
           text: "Title",
           align: "start",
           sortable: false,
           value: "title",
+        },
+        {
+         text: 'Actions', value: 'name', sortable: false 
         }
       ];
     },
@@ -86,6 +105,14 @@ export default {
       this.addTodo(this.title);
       this.title = '';
   },
+      editItem () {
+      this.dialog = true
+    },
+
+    deleteItem (item) {
+      const index = this.desserts.indexOf(item)
+      confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
+    }
   }
 };
 </script>
