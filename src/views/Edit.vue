@@ -8,7 +8,7 @@
 <script>
 // @ is an alias to /src
 
-import Table from '@/components/table.vue'
+import Table from '@/components/tables/table.vue'
 // import carousel from '@/components/carousel.vue'
 
 

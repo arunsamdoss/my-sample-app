@@ -3,7 +3,9 @@ import VueRouter from 'vue-router'
 
 import Home from '../views/Home.vue'
 import Edit from '../views/Edit.vue'
-import Root from '../views/root.vue'
+import SigninPage from '../components/auth/signin.vue'
+import SignupPage from '../components/auth/signup.vue'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -13,15 +15,20 @@ const routes = [
     name: 'Home',
     component: Home
   },
+
+  {
+    path: '/signup',
+    component: SignupPage
+  },
+
+  {
+    path: '/signin',
+    component: SigninPage
+  },
   {
     path: '/edit',
     name: 'Edit',
     component: Edit
-  },
-  {
-    path: '/root',
-    name: 'Root',
-    component: Root
   }
 ]
 
