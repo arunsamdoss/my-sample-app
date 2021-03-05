@@ -10,7 +10,7 @@
           <li v-for="(item, index) in allAccount" v-bind:key="index"></li>
           <v-form ref="form" lazy-validation>
             <v-text-field
-              v-model="form.name"
+              v-model="form.email"
               label="User Name"
               :rules="emailRules"
               outlined
@@ -57,7 +57,7 @@ export default {
   data() {
     return {
       form: {
-        name: "",
+        email: "",
         password: "",
       },
       emailRules: [
@@ -77,15 +77,15 @@ export default {
   methods: {
     login(dar) {
       console.log(dar);
-      if (this.form.name != "" && this.form.password != "") {
-        // this.$store.dispatch("login", this.form);
-        // this.$router.push({ name: "Edit" });
-        if(this.form.name == this.$props.allAccount.name && this.form.password == this.$props.allAccount.password)
-          {
-          this.$router.push({ name: "Edit" })
-          } else {
-              console.log("The username and / or password is incorrect")
-          }
+      if (this.form.email != "" && this.form.password != "") {
+        this.$store.dispatch("user/login", this.form);
+        this.$router.push({ name: "Edit" });
+        // if(this.form.name == this.$props.allAccount.name && this.form.password == this.$props.allAccount.password)
+        //   {
+        //   this.$router.push({ name: "Edit" })
+        //   } else {
+        //       console.log("The username and / or password is incorrect")
+        //   }
       } else {
         console.log("A username and password must be present");
       }

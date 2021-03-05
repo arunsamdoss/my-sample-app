@@ -4,18 +4,14 @@
     <div class="cta">
       <router-link to="/signup">Sign Up</router-link>
       <router-link to="/signin">Sign In</router-link>
-    <signinPage allAccount:allAccount />
     </div>
   </div>
 </template>
 
 <script>
 
-import SigninPage from '../components/auth/signin.vue'
+
 export default {
-  components: { 
-    SigninPage 
-  },
       data() {
     return {
    allAccount: [

@@ -32,38 +32,32 @@ export default new Vuex.Store({
       commit('addTodo', response.data)
     },
     signup({ commit }, authData) {
-      axios.post('https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyAv71t6_6YOyOdpbkmsvqtE2i68uhL3U1g', {
+      axios.post('http://localhost:8000/auth/register', {
         email: authData.email,
         password: authData.password,
         returnSecureToken: true
       })
         .then(res => {
           console.log(res)
-          localStorage.setItem('token', res.data.idToken)
-          localStorage.setItem('userId', res.data.localId)
           commit('authUser', {
             token: res.data.idToken,
             userId: res.data.localId
           })
-          router.push("/edit")
         })
         .catch(error => console.log(error))
     },
     login({ commit }, authData) {
-      axios.post('https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyAv71t6_6YOyOdpbkmsvqtE2i68uhL3U1g', {
+      axios.post('http://localhost:8000/auth/login', {
         email: authData.email,
         password: authData.password,
         returnSecureToken: true
       })
         .then(res => {
           console.log(res)
-          localStorage.setItem('token', res.data.idToken)
-          localStorage.setItem('userId', res.data.localId)
           commit('authUser', {
             token: res.data.idToken,
             userId: res.data.localId
           })
-          router.push("/dashboard")
         })
         .catch(error => console.log(error))
     },
