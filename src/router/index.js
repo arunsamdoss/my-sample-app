@@ -5,6 +5,23 @@ import Home from '../views/Home.vue'
 import Edit from '../views/Edit.vue'
 import SigninPage from '../components/auth/signin.vue'
 import SignupPage from '../components/auth/signup.vue'
+// import store from "../store"
+
+// const ifNotAuthenticated = (to, from, next) => {
+//   if (!store.getters.isAuthenticated) {
+//     next();
+//     return;
+//   }
+//   next("/");
+// };
+
+// const ifAuthenticated = (to, from, next) => {
+//   if (store.getters.isAuthenticated) {
+//     next();
+//     return;
+//   }
+//   next("/signin");
+// }
 
 Vue.use(VueRouter)
 
@@ -23,12 +40,14 @@ const routes = [
 
   {
     path: '/signin',
-    component: SigninPage
+    component: SigninPage,
+    // beforeEnter: ifNotAuthenticated
   },
   {
     path: '/edit',
     name: 'Edit',
-    component: Edit
+    component: Edit,
+    // beforeEnter: ifAuthenticated
   }
 ]
 

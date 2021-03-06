@@ -2,9 +2,10 @@
 <v-container>  
   <div class="todos">
     <h1 style="text-align: center;">Data Table</h1>
-    <!-- <v-btn
+    <v-btn
         color="primary"
-      ><router-link to="/"></router-link>logout</v-btn>|| -->
+        @click="logout"
+      >logout</v-btn>
     <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on, attrs }">
         <v-btn fab dark color="indigo" v-bind="attrs" v-on="on">
@@ -36,7 +37,7 @@
       </v-card>
     </v-dialog>
     <v-data-table :headers="headers" :items="allTodos" item-key="id">
-      <template v-slot:items="props">
+      <!-- <template v-slot:item.actions="{ item }">>
        <td class="justify-center layout px-0">
             <v-icon
               small
@@ -52,29 +53,43 @@
               delete
             </v-icon>
           </td>
-      </template>    
+      </template>     -->
+      <!-- eslint-disable vue/valid-v-slot -->
+      <template v-slot:item.actions="{ item }">
+        <v-btn
+          small
+
+          @click="deleteTodo(item.id)"
+        >
+          Delete
+        </v-btn>
+
+      </template>
     </v-data-table>
   </div>
 </v-container>
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex"
+import { mapGetters, mapActions } from "vuex"
 
 export default {
   name: "Table",
   data() {
     return {
       dialog: false,
-      title: ''
+      title: '',
     }
   },
   computed: {
-    ...mapState({
-      allTodos: (state) => {
-        return state.todos;
-      },
-    }),
+    ...mapGetters([ "allTodos" ]),
+    // ...mapState({
+    //   allTodos: (state) => {
+    //     console.log(state.todos)
+    //     return state.todos.todos;
+    //   },
+    // }),
+    
     headers() {
       return [
         {
@@ -90,7 +105,7 @@ export default {
           value: "title",
         },
         {
-         text: 'Actions', value: 'name', sortable: false 
+         text: 'Actions', value:'actions', sortable: false 
         }
       ];
     },
@@ -99,20 +114,12 @@ export default {
     this.fetchTodos();
   },
   methods: {
-    ...mapActions(["fetchTodos", "addTodo"]),
+    ...mapActions(["fetchTodos", "addTodo", "deleteTodo", "logout"]),
         onSubmit(event) {
       event.preventDefault();
       this.addTodo(this.title);
       this.title = '';
   },
-      editItem () {
-      this.dialog = true
-    },
-
-    deleteItem (item) {
-      const index = this.desserts.indexOf(item)
-      confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
-    }
   }
 };
 </script>

@@ -1,79 +1,111 @@
 <template>
-<div>
-  <section class="section-container">
-    <v-row class="signin">
-      <v-col cols="8" class="left">
-        <h1>Welcome</h1>
-      </v-col>
-      <v-col cols="4" class="right">
-        <h2>Register</h2>
-        <v-form ref="form" lazy-validation>
-          <v-text-field
-            v-model="formData.email "
-            label="Email"
-            outlined
-            dark
-            filled
-            dense
-          ></v-text-field>
+  <div>
+    <section class="section-container">
+      <v-row class="signin">
+        <v-col cols="8" class="left">
+          <h1>Welcome</h1>
+        </v-col>
+        <v-col cols="4" class="right">
+          <h2>Register</h2>
+          <v-form ref="form" lazy-validation>
             <v-text-field
-            v-model="formData.name "
-            label="User Name"
-            outlined
-            dark
-            filled
-            dense
-          ></v-text-field>
-          <v-text-field
-            v-model="formData.password"
-            label="Password"
-            :append-icon="showPass ? 'mdi-eye' : 'mdi-eye-off'"
-            @click:append="showPass = !showPass"
-            outlined
-            dense
-            dark
-            filled
-            :type="showPass ? 'text' : 'password'"
-          ></v-text-field>
-            <v-btn  class="signin-btn" rounded color="white" v-on:click.prevent="Register(formData)">
+              v-model="formData.email"
+              label="Email"
+              :rules="emailRules"
+              outlined
+              dark
+              filled
+              dense
+            ></v-text-field>
+            <v-text-field
+              v-model="formData.name"
+              label="User Name"
+              :rules="nameRules"
+              outlined
+              dark
+              filled
+              dense
+            ></v-text-field>
+            <v-text-field
+              v-model="formData.password"
+              label="Password"
+              :rules="passwordRules"
+              :append-icon="showPass ? 'mdi-eye' : 'mdi-eye-off'"
+              @click:append="showPass = !showPass"
+              outlined
+              dense
+              dark
+              filled
+              :type="showPass ? 'text' : 'password'"
+            ></v-text-field>
+            <v-btn
+              class="signin-btn"
+              rounded
+              color="white"
+              v-on:click.prevent="Register(formData)"
+            >
               Submit
             </v-btn>
-                <!-- <div class="cta">
+            <!-- <div class="cta">
       <router-link to="/">Back</router-link>
     </div> -->
-        </v-form>
-      </v-col>
-    </v-row>
-  </section>
-</div>
+          </v-form>
+        </v-col>
+      </v-row>
+    </section>
+  </div>
 </template>
+
 <script>
+import { mapActions } from "vuex";
 export default {
-    name: 'signup',
-    data() {
-        return {
+  name: "signup",
+  data() {
+    return {
       formData: {
-      email: '',
-      name: '',
-      password: ''
+        email: "",
+        name: "",
+        password: "",
       },
-      showPass: false
-        }
-    },
- methods: {
+        emailRules: [
+          (v) => !!v || "E-mail is required",
+          (v) =>
+            /^(([^<>()[\]\\.,;:\s@']+(\.[^<>()\\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+              v
+            ) || "E-mail must be valid",
+        ],
+        passwordRules: [
+          (v) => !!v || "Password is required",
+          (v) =>
+            /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(v) ||
+            "Password must contain at least lowercase letter, one number, a special character and one uppercase letter",
+        ],
+        nameRules: [
+          (v) => !!v || "Name is required",
+          (v) =>
+            (v && v.length <= 10) || "Name must be less than 10 characters",
+        ],
+      showPass: false,
+    };
+  },
+  methods: {
+    ...mapActions(["singup"]),
     Register(das) {
-    console.log(das)
-    if (this.formData.name != "" && this.formData.password != "" && this.formData.email != "") {
-      this.$store.dispatch('signup', this.formData)
-    }else {
-      console.log("must be present")
+      console.log(das);
+      if (
+        this.formData.name != "" &&
+        this.formData.password != "" &&
+        this.formData.email != ""
+      ) {
+        this.$store.dispatch("signup", this.formData);
+      } else {
+        console.log("must be present");
       }
-    }
-}
-}
+    },
+  },
+};
 </script>
 <style lang="scss" scoped>
-
 .section-container {
   padding: 20px;
   margin: 20px;
@@ -112,27 +144,27 @@ export default {
     }
   }
 }
-  .cta {
-    width: 300px;
-    margin: auto;
-    text-align: center;
-  }
+.cta {
+  width: 300px;
+  margin: auto;
+  text-align: center;
+}
 
-  .cta a {
-    margin: 10px;
-    text-decoration: none;
-    display: inline-block;
-    border: 1px solid #08c0b7;
-    border-radius: 3px;
-    width: 100px;
-    padding: 10px;
-    box-sizing: border-box;
-    color: #08c0b7;
-  }
+.cta a {
+  margin: 10px;
+  text-decoration: none;
+  display: inline-block;
+  border: 1px solid #08c0b7;
+  border-radius: 3px;
+  width: 100px;
+  padding: 10px;
+  box-sizing: border-box;
+  color: #08c0b7;
+}
 
-  .cta a:hover,
-  .cta a:active {
-    background-color: #08c0b7;
-    color: white;
-  }
+.cta a:hover,
+.cta a:active {
+  background-color: #08c0b7;
+  color: white;
+}
 </style>

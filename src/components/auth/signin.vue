@@ -46,13 +46,13 @@
 </template>
 
 <script>
-// import { mapState} from 'vuex'
+import { mapActions } from "vuex"
 export default {
   name: "HelloWord",
-   props: {
+  props: {
     allAccount: {
       type: Array,
-    }
+    },
   },
   data() {
     return {
@@ -61,34 +61,33 @@ export default {
         password: "",
       },
       emailRules: [
-        // v => !!v || 'E-mail is required',
-        // v => /^(([^<>()[\]\\.,;:\s@']+(\.[^<>()\\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(v) || 'E-mail must be valid',
+        v => !!v || 'E-mail is required',
+        v => /^(([^<>()[\]\\.,;:\s@']+(\.[^<>()\\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(v) || 'E-mail must be valid',
       ],
       passwordRules: [
-        // v => !!v || 'Password is required',
-        // v => /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(v) || 'Password must contain at least lowercase letter, one number, a special character and one uppercase letter',
+        v => !!v || 'Password is required',
+        v => /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(v) || 'Password must contain at least lowercase letter, one number, a special character and one uppercase letter',
       ],
       showPass: false,
     };
   },
   created() {
     console.log(this.allAccount);
-},
+  },
   methods: {
+    ...mapActions([ "login"]),
     login(dar) {
       console.log(dar);
-      if (this.form.email != "" && this.form.password != "") {
-        this.$store.dispatch("user/login", this.form);
-        this.$router.push({ name: "Edit" });
-        // if(this.form.name == this.$props.allAccount.name && this.form.password == this.$props.allAccount.password)
+      // if (this.form.email != "" && this.form.password != "") {
+        // if(this.form.name == this.allAccount.name && this.form.password == this.allAccount.password)
         //   {
         //   this.$router.push({ name: "Edit" })
         //   } else {
         //       console.log("The username and / or password is incorrect")
         //   }
-      } else {
-        console.log("A username and password must be present");
-      }
+      // } else {
+      //   console.log("A username and password must be present");
+      // }
     },
   },
 };
